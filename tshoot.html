@@ -1,0 +1,325 @@
+{% extends "base.html" %}
+{% block title %} Tshoot {% endblock title %}
+{% set active_page = "tshoot" %}
+
+{% block content %}
+
+
+<div class="row">
+	<form action="" id="formEntry"method="post">
+	<div class="card-group">
+		<div class="card bg-dark bordered border-secondary">
+			<div class="card-body">
+				<h5 class="card-title">Select Devices</h5>
+				<table id="deviceTable" class="table table-dark table-sm table-bordered">
+					<thead>
+						<tr>
+						<th class="text-center p-0 align-middle">
+						</th>
+						<th>Host</th>
+						<th>Address</th>
+						</tr>
+					</thead>
+					<tbody>
+						<div id="newJob"  class="form-group col-sm-6">
+						{% for host in hosts %}
+						{%if device[0]==host.name%}
+						<tr>
+
+							<td class="choice-option"><input type="radio"  id="DevBttn" name="device" checked="checked" onChange="this.form.submit();" value="{{ host.name }}"></td>
+							<td>{{ host.name }}</td>
+							<td>{{ host.hostname }}</td>
+						</tr>
+						{% else %}
+						<tr>
+
+							<td class="choice-option"><input type="radio"  id="DevBttn" name="device" onChange="this.form.submit();" value="{{ host.name }}"></td>
+							<td>{{ host.name }}</td>
+							<td>{{ host.hostname }}</td>
+						</tr>
+						{% endif %}
+						{% endfor %}
+						</div>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="card bg-dark bordered border-secondary">
+			<div class="card-body">
+				<h5 class="card-title">Select Show Command</h5>
+				<table id="configOptionTable" class="table table-dark table-sm table-bordered">
+					<thead>
+						<tr>
+						<th class="text-center p-0 align-middle">
+						</th>
+						<th>Config Type</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for config in config_options %}
+						<tr>
+							<td class="text-center p-0 align-middle"><input type="radio"   name="config" value="{{ config}}"></td>
+							<td>{{ config }}</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<button type="button" data-bs-toggle="modal" data-bs-target="#customer-login" data-bs-backdrop="static"  id="PassBtn" class="btn btn-primary btn-md float-end my-2" >Submit</button>
+	</form>
+</div>
+
+{% with messages = get_flashed_messages() %}
+	{% if messages %}
+		<ul class=flashes>
+		{% for  message in messages %}
+			<p class="text-center p-0 align-middle text-danger" >{{ message }}</p>
+		{% endfor %}
+		</ul>
+	{% endif %}
+{% endwith %}
+
+
+
+
+<div class="modal fade" id="customer-login" tabindex="-1" role="dialog" aria-labelledby="customer-login-header" aria-hidden="true">
+    <div class="modal-dialog">
+        <form action="" method="POST" name="log-in">
+            <div class="modal-content bg-dark">
+                <div class="modal-header">
+                    <h2 id="customer-login-header" class="text-right" text-right>Device Login</h2>
+                </div>
+                <div class="modal-body">  
+                <input type="hidden" id="newJobM" name="device2"/>
+                <input type="hidden" id="newJobM2" name="config2"/>
+	                     <fieldset>
+                        <input type="text" class="form-control" id="cl_username" name="username" placeholder="Username"/>
+                        <br/>
+                            <input type="password" class="form-control" id="cl_password" name="password" placeholder="Password"/>
+                </fieldset>
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-primary" value="Submit" id="SubmitBtn"/>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% if old_output | length != 0 %}
+<br>
+
+<table class="table table-dark " id="configTable">
+	<thead>
+		<tr>
+		<th scope="col">Old Device Output</th>
+		<th scope="col">New Device Output</th>
+		<th scope="col">Diff</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+				<button type="button" data-id="{{old_output[0]}}" name={{old_output[0]}} class="btn btn-sm btn-primary config-btn" data-bs-toggle="modal" data-bs-target="#configModal">
+					{{old_output[0]}}
+				  </button>
+			</td>
+			<td>
+				<button type="button" data-id="{{new_output[0]}}" name={{new_output[0]}} class="btn btn-sm btn-primary config-btn" data-bs-toggle="modal" data-bs-target="#configModal">
+					{{new_output[0]}}
+				  </button>
+			</td>
+			<td>
+				<button type="button" data-id="{{diff_output[0]}}" name={{diff_output[0]}} class="btn btn-sm btn-primary config-btn" data-bs-toggle="modal" data-bs-target="#configModal">
+					{{diff_output[0]}}
+				  </button>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+{% endif%}
+
+<br>
+
+<div class="modal fade" id="configModal" tabindex="-1" aria-labelledby="configModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-scrollable modal-lg">
+	  <div class="modal-content bg-dark">
+		<div class="modal-header ">
+		  <h5 class="modal-title" id="configModalLabel"></h5>
+		  <button type="button" class="btn-close bg-light" data-bs-dismiss="modal" aria-label="Close"></button>
+		</div>
+		<div class="modal-body">
+			<pre class="modal-pre-config"></pre>
+		</div>
+	  </div>
+	</div>
+  </div>
+</div>
+</div>
+</div>
+
+
+<div class="modal fade" id="configModal2" tabindex="-1" aria-labelledby="configModalLabel2" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-scrollable modal-lg">
+	  <div class="modal-content bg-dark">
+		<div class="modal-header ">
+		  <h5 class="modal-title2" id="configModalLabel2"></h5>
+		  <button type="button" class="btn-close bg-light" data-bs-dismiss="modal" aria-label="Close"></button>
+		</div>
+		<div class="modal-body">
+			<pre class="modal-pre-config2"></pre>
+		</div>
+	  </div>
+	</div>
+  </div>
+</div>
+</div>
+</div>
+
+
+{% if results | length != 0 %}
+
+<div class="card-group">
+ <div class="card bg-dark bordered border-secondary">
+  <div class="card-body">
+  	<h5 class="card-title"  name="demo" >{{switch_name}}</h5>
+	<table id="inventoryTable" class="table table-dark small responsive sticky-header striped table-bordered">
+		<thead>
+			<tr>
+			{% for el in headers %}
+			<th scope="col">{{el}}</th>
+			{% endfor %}
+			</tr>
+		</thead>
+		<tbody>
+			{% for node in results %}
+
+			<tr>
+				{% for el in node %}
+				<td>{{ el }} </td>
+				{% endfor %}
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+  </div>
+ </div>
+</div>
+
+{% endif%}
+
+
+
+{% endblock content %}
+
+{% block script %}
+
+
+<script>
+	$(document).ready(function() {
+  	$('#inventoryTable').DataTable({
+			ordering:true
+		});
+	});
+
+	$(document).ready(function() {
+  	$('#deviceTable').DataTable({
+  		lengthMenu: [5, 10, 20, 50, 100],
+			order:false
+		});
+	});
+
+
+	$(document).ready(function() {
+  	$('#configOptionTable').DataTable({
+  		lengthMenu: [5, 10, 20, 50, 100],
+			order:false
+		});
+	});
+	$(document).ready(function() {
+  	$('#resultTable').DataTable({
+  		lengthMenu: [5, 10, 20, 50, 100],
+			order:false
+		});
+	});
+	$(document).ready(function() {
+  	$('#historyTable').DataTable({
+  		lengthMenu: [3, 10, 20, 50, 100],
+			order:false
+		});
+	});
+</script>
+
+<script>
+$('#PassBtn').on('click', function(){
+	$('#newJobM').val($('input[name=device]:checked').val())
+	$('#newJobM2').val($('input[name=config]:checked').val())
+});
+   
+$('#SubmitBtn').on('click', function(event){
+    var errorDiv = $('#error');
+    errorDiv.addClass('hide').empty();
+    
+    var userName = $('#cl_username').val();
+    var password = $('#cl_password').val();
+   if ($.trim(userName) == '' || $.trim(password) == '')
+   {
+     errorDiv.removeClass('hide').append('User Name and Password is required');
+     event.preventDefault();
+   }
+});
+</script>
+<script>
+$(document).ready(function() {
+    var messages = "{{ get_flashed_messages() }}";
+
+    if (typeof messages != 'undefined' && messages != '[]') {
+        $("#myModal").modal();
+    };
+});
+</script>
+<script>
+  $(document).ready(function(){
+
+	$('.config-btn').click(function(){
+
+	  var btnid = $(this).data('id');
+
+	  // AJAX request
+	  $.ajax({
+	   url: 'output/get/'+ btnid,
+	   type: 'get',
+	   success: function(response){
+		 // Add response in Modal body
+		 $('.modal-title').html(response.title);
+		 $('.modal-pre-config').html(response.config);
+
+		 // Display Modal
+		 $('#configModal').modal('show');
+	   }
+	 });
+	});
+   });
+</script>
+
+
+<script>
+$(document).ready(function(){
+ $('.cfg-btn').click(function(){
+  $.ajax({
+   url:"/static/cisco_always_on-new.html",
+   dataType:"html",
+   success:function(data)
+   {
+    $('.modal-pre-config2').html(data);
+   }
+  });
+ });
+ 
+});
+</script>
+{% endblock %}

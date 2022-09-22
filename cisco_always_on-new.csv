@@ -1,0 +1,4 @@
+bia,description,interface,ip_address,link_status
+0050.46bf.78ad,MANAGEMENT INTERFACE - DON'T TOUCH ME,GigabitEthernet1,10.10.20.48/24,up
+0050.56bf.4ea3,Network Interface,GigabitEthernet2,,administratively down
+0050.56bf.7db4,Network Interface,GigabitEthernet3,,down

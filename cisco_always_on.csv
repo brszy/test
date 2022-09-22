@@ -1,0 +1,2 @@
+config_register,hostname,serial,uptime,version
+0x2102,csr1000v-1,9ESGOBARV9D,"23 hours, 16 minutes",17.3.1a

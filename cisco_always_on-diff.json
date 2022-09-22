@@ -1,0 +1,86 @@
+{
+    "added": [],
+    "removed": [
+        {
+            "bia": "",
+            "description": "",
+            "interface": "Loopback1",
+            "ip_address": "192.168.20.1/24",
+            "link_status": "up"
+        },
+        {
+            "bia": "",
+            "description": "",
+            "interface": "Loopback12",
+            "ip_address": "172.16.10.8/16",
+            "link_status": "up"
+        },
+        {
+            "bia": "",
+            "description": "",
+            "interface": "Loopback46",
+            "ip_address": "192.168.46.1/32",
+            "link_status": "up"
+        },
+        {
+            "bia": "",
+            "description": "",
+            "interface": "Loopback49",
+            "ip_address": "192.168.49.1/32",
+            "link_status": "up"
+        },
+        {
+            "bia": "",
+            "description": "",
+            "interface": "Loopback111",
+            "ip_address": "100.100.111.111/32",
+            "link_status": "up"
+        },
+        {
+            "bia": "001e.49d3.2cbd",
+            "description": "",
+            "interface": "VirtualPortGroup0",
+            "ip_address": "192.168.1.1/24",
+            "link_status": "up"
+        }
+    ],
+    "changed": [
+        {
+            "key": "GigabitEthernet1",
+            "changes": {
+                "bia": [
+                    "0050.56bf.78ac",
+                    "0050.46bf.78ad"
+                ]
+            }
+        },
+        {
+            "key": "GigabitEthernet2",
+            "changes": {
+                "description": [
+                    "LAN Interface",
+                    "Network Interface"
+                ],
+                "ip_address": [
+                    "192.168.100.98/24",
+                    ""
+                ],
+                "link_status": [
+                    "up",
+                    "administratively down"
+                ]
+            }
+        },
+        {
+            "key": "GigabitEthernet3",
+            "changes": {
+                "link_status": [
+                    "administratively down",
+                    "down"
+                ]
+            }
+        }
+    ],
+    "columns_added": [],
+    "columns_removed": []
+}

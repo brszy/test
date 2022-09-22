@@ -1,0 +1,10 @@
+bia,description,interface,ip_address,link_status
+0050.56bf.78ac,MANAGEMENT INTERFACE - DON'T TOUCH ME,GigabitEthernet1,10.10.20.48/24,up
+0050.56bf.4ea3,LAN Interface,GigabitEthernet2,192.168.100.98/24,up
+0050.56bf.7db4,Network Interface,GigabitEthernet3,,administratively down
+,,Loopback1,192.168.20.1/24,up
+,,Loopback12,172.16.10.8/16,up
+,,Loopback46,192.168.46.1/32,up
+,,Loopback49,192.168.49.1/32,up
+,,Loopback111,100.100.111.111/32,up
+001e.49d3.2cbd,,VirtualPortGroup0,192.168.1.1/24,up
